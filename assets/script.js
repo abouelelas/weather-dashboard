@@ -105,14 +105,54 @@ $(document).ready(function () {
         cardBody.append(humidity);
         card.append(cardBody)
         $("#current").append(card);
-
-        
-        
-
-
       }
     });
         $("#current").empty();
+        var lat = data.coord.lat;
+        var lon = data.coord.lon;
+
+        var queryUrlUvindex ="http://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${data.coord.lat}&lon=${data.coord.lon}" + cityName +lat+lon +"&appid=" + apiKey;
+        $.ajax({
+          url: queryUrlUvindex,
+          method: "GET"
+      }).then(function (UVdata) {
+          var UVIndex = UVdata.value;
+          var pTag = $("<p>").text("UV Index: " + UVIndex)
+          city.append(pTag);
+          pTag.addClass("index");
+          var UVcond
+          //UV Index color that indicates whether the conditions are favorable, moderate, or severe
+          if (UVIndex > 2) {
+              $("#current").css("background-color", "#82E0AA");
+              UVcond = $("<p>").text("Favorable");
+             city.append(UVcond);
+          }
+          else if (UVIndex < 6) {
+              $("#current").css("background-color", "#FFF176");
+              UVcond = $("<p>").text("Moderate");
+              city.append(UVcond);
+          }
+          else if (UVIndex < 8) {
+              $("#current").css("background-color", "#FFB74D");
+              UVcond = $("<p>").text("Moderate");
+              city.append(UVcond);
+          }
+          else if (UVIndex < 11) {
+              $("#current").css("background-color", "red");
+              UVcond = $("<p>").text("Severe");
+              currentdata.append(UVcond);
+          }
+          else {
+              $("#current").css("background-color", "firebrick");
+              UVcond = $("<p>").text("SEVERE");
+              currentdata.append(UVcond);
+          }
+          $(currentdata).append(UV);
+         
+      })
+
+        
+        
         // $.ajax({
         //   url: "https://api.openweathermap.org/data/2.5/weather?q=40ea71f932558a6b52a82bff32c16d37",
         // }).done(function(data) {
