@@ -76,7 +76,7 @@ function getUVIndex(lat, lon) {
       else if (UVIndex > 6 && UVIndex < 8) {
         $("#uvl-display").css("background-color", "#FFF176");
       }
-      else if (UVIndex >= 8 && UVIndex <= 10) {
+      else if (UVIndex >= 8 && UVIndex < 11) {
         $("#uvl-display").css("background-color", "#FFB74D");
       }
       else if (UVIndex >= 11) {
@@ -86,9 +86,9 @@ function getUVIndex(lat, lon) {
   })
 }
 function getForecast() {
-  var queryUrlForecast = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityName + "&appid=" + apiKey;
+  var queryUrlForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey;
 
-  //get 5 day forecast
+  //get 5-day forecast
 
   $.ajax({
     url: queryUrlForecast,
@@ -97,23 +97,26 @@ function getForecast() {
   }).then(function (data) {
     console.log(data);
     //add container div for forecast cards
-    var newrow = $("<p>").addClass("cardText").text(data.name + "   " + moment(data.dt_txt).format('LL'));
+
 
 
     //loop through array response to find the forecasts
-    var fiveTemp = day.main.temp
-    fiveTemp = Math.floor((fiveTemp - 273.15) * 1.8 + 32);
-    var fiveHumid = day.main.humidity
-    var icon = day.weather[0].icon;
     for (var i = 0; i < 5; i++) {
+
+      var fiveTemp = data.main.temp
+      fiveTemp = Math.floor((fiveTemp - 273.15) * 1.8 + 32);
+      var icon = "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+      var cardImg = $("<div>").attr("class", "col-md-4").append($("<img>").attr("src", icon).attr("class", "card-img"));
+
       if (data.list[i].dt_txt.indexOf([i]) !== -1) {
+        var newrow = $("<p>").addClass("cardText").text(data.name + "   " + moment(data.dt_txt).format('LL'));
         var newCol = $("<div>").attr("class", "one-fifth");
         newrow.append(newCol);
 
         var newCard = $("<div>").attr("class", "card text-white bg-primary");
         newCol.append(newCard);
 
-        var cardHead = $("<div>").attr("class", "card-header").text(moment(response.list[i].dt, "X").format("MMM Do"));
+        var cardHead = $("<div>").attr("class", "card-header").text(data.list[i].dt, "X").format("MMM Do");
         newCard.append(cardHead);
 
         var cardImg = $("<img>").attr("class", "card-img-top").attr("src", "https://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png");
@@ -184,12 +187,12 @@ function getWeather(userInput) {
       $("#current").append(card);
       getUVIndex(lat, lon);
       getForecast();
-    } 
-  })  
+    }
+  })
 
 
-$("#select-city").on("click", function (event) {
-  event.preventDefault();
-  $("#current").empty();
-})
+  $("#select-city").on("click", function (event) {
+    event.preventDefault();
+    $("#current").empty();
+  })
 }
