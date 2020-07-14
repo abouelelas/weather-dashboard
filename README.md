@@ -25,8 +25,8 @@ THEN I am again presented with current and future conditions for that city
 
 The following image demonstrates the application functionality:
 
-[weather dashboard demo](./Assets/screenshot-weather.png)
+!(weather dashboard demo)[./Assets/screenshot-weather.png]
 
-[weather-dashboard](https://github.com/abouelelas/weather-dashboard)
-[weather-dashboard](https://abouelelas.github.io/weather-dashboard/)
+**(weather-dashboard)[https://github.com/abouelelas/weather-dashboard]
+**(weather-dashboard)[https://abouelelas.github.io/weather-dashboard]
 
