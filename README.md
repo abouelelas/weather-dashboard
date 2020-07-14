@@ -27,6 +27,6 @@ The following image demonstrates the application functionality:
 
 [weather dashboard demo](./Assets/screenshot-weather.png)
 
-[weather-dashboard]()
-[weather-dashboard]()
+[weather-dashboard](https://github.com/abouelelas/weather-dashboard)
+[weather-dashboard](https://abouelelas.github.io/weather-dashboard/)
 
